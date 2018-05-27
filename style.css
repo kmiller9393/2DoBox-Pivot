@@ -63,7 +63,7 @@ h1{
     width: 45.5%;
 }
 
-.save-btn:hover {
+.save-btn:hover:enabled {
     background-color: #045e55;
 }
 
@@ -80,6 +80,7 @@ input {
     margin: auto;
     position: relative;
     width: 45%;
+    border-bottom: 2px solid #d1d3d4;
 }
 
 .card {
