@@ -3,7 +3,22 @@ var body = $('#body-input').val();
 var numCards = 0;
 var qualityVariable = "swill";
 
+$('#title-input').on('input', toggleDisabledSave);
+$('#body-input').on('input', toggleDisabledSave);
+
+function toggleDisabledSave() {
+    var titleInput = $('#title-input').val();
+    var bodyInput = $('#body-input').val();
+    var saveButton = $('.save-btn');
+    if (titleInput === '' || bodyInput === '') {
+        saveButton.prop('disabled', true);
+    } else {
+        saveButton.prop('disabled', false);
+    }
+}
+
 var newCard = function(id , title , body , quality) {
+    toggleDisabledSave();
     return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
             + title +  '</h2>'
             + '<button class="delete-button"></button>'
@@ -37,14 +52,11 @@ var localStoreCard = function() {
 
 $('.save-btn').on('click', function(event) {
     event.preventDefault();
-    if ($('#title-input').val() === "" || $('#body-input').val() === "") {
-       return false;
-    };  
-
     numCards++;
     $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
     localStoreCard();
     $('form')[0].reset();
+    toggleDisabledSave();
 });
 
 $(".bottom-box").on('click', function(event){
