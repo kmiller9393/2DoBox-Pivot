@@ -1,10 +1,11 @@
-var title = $('#title-input').val();
-var body = $('#body-input').val();
+// var title = $('#title-input').val();
+// var body = $('#body-input').val();
 var numCards = 0;
 var qualityVariable = "swill";
 
 $('#title-input').on('input', toggleDisabledSave);
 $('#body-input').on('input', toggleDisabledSave);
+$(window).on('load', retrieveIdea);
 
 function toggleDisabledSave() {
     var titleInput = $('#title-input').val();
@@ -39,11 +40,21 @@ function cardObject() {
     };
 }
 
-$.each(localStorage, function(key) {
-    var cardData = JSON.parse(this);
+// $.each(localStorage, function(key) {
+//     var cardData = JSON.parse(this);
+//     numCards++;
+//     $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
+// });
+
+function retrieveIdea() {
     numCards++;
-    $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-});
+    for (var i = 0; i < localStorage.length; i++) {
+     var retrievedIdea = localStorage.getItem(localStorage.key(i));
+     var parsedIdea = JSON.parse(retrievedIdea);
+     console.log(parsedIdea);
+     newCard(parsedIdea.id, parsedIdea.title, parsedIdea.body, parsedIdea.quality);
+    };
+  };
 
 var localStoreCard = function() {
     var cardString = JSON.stringify(cardObject());
@@ -51,9 +62,16 @@ var localStoreCard = function() {
 }
 
 $('.save-btn').on('click', function(event) {
+    var title = $('#title-input').val();
+    var body = $('#body-input').val();
+    var id = id;
+    var quality = quality;
     event.preventDefault();
     numCards++;
-    $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
+    // $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
+    console.log(title);
+    console.log(body);
+    newCard(id, title, body, quality);
     localStoreCard();
     $('form')[0].reset();
     toggleDisabledSave();
