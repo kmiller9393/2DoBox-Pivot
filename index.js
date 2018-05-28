@@ -1,6 +1,6 @@
 // var title = $('#title-input').val();
 // var body = $('#body-input').val();
-var numCards = 0;
+// var numCards = 0;
 var qualityVariable = "swill";
 
 $('#title-input').on('input', toggleDisabledSave);
@@ -47,7 +47,7 @@ function cardObject() {
 // });
 
 function retrieveIdea() {
-    numCards++;
+    // numCards++;
     for (var i = 0; i < localStorage.length; i++) {
      var retrievedIdea = localStorage.getItem(localStorage.key(i));
      var parsedIdea = JSON.parse(retrievedIdea);
@@ -56,23 +56,21 @@ function retrieveIdea() {
     };
   };
 
-var localStoreCard = function() {
+var localStoreCard = function(id) {
     var cardString = JSON.stringify(cardObject());
-    localStorage.setItem('card' + numCards, cardString);
+    localStorage.setItem(id, cardString);
 }
-
+ 
 $('.save-btn').on('click', function(event) {
-    var title = $('#title-input').val();
-    var body = $('#body-input').val();
-    var id = id;
-    var quality = quality;
-    event.preventDefault();
-    numCards++;
-    // $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
-    console.log(title);
-    console.log(body);
-    newCard(id, title, body, quality);
-    localStoreCard();
+      event.preventDefault();
+      var title = $('#title-input').val();
+      var body = $('#body-input').val();
+      var $id = $.now();
+      var quality = quality;
+      console.log(title);
+      console.log(body);
+    newCard($id, title, body, quality);
+    localStoreCard($id);
     $('form')[0].reset();
     toggleDisabledSave();
 });
