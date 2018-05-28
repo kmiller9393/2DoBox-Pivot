@@ -1,50 +1,29 @@
-// var title = $('#title-input').val();
-// var body = $('#body-input').val();
-// var numCards = 0;
-var qualityVariable = "swill";
-
 $('#title-input').on('input', toggleDisabledSave);
 $('#body-input').on('input', toggleDisabledSave);
 $(window).on('load', retrieveIdea);
 
 function toggleDisabledSave() {
-    var titleInput = $('#title-input').val();
-    var bodyInput = $('#body-input').val();
-    var saveButton = $('.save-btn');
-    if (titleInput === '' || bodyInput === '') {
+     var saveButton = $('.save-btn');
+    if  ($('#title-input').val() === '' || $('#body-input').val() === '') {
         saveButton.prop('disabled', true);
     } else {
         saveButton.prop('disabled', false);
     }
 }
 
-var newCard = function(id , title , body , quality) {
+var newCard = function(card) {
     var ideaList = $('.bottom-box');
-    var createdIdea = `<section id=${id} class="card-container"><h2 class="title-of-card">  
-        ${title}</h2>
-        <button class="delete-button"></button>
-        <p class="body-of-card">
-        ${body}</p>
-        <button class="upvote"></button> 
-        <button class="downvote"></button> 
-        <p class="quality">quality: ${quality}</p>    
+    var createdIdea =   
+        `<section id=${card.id} class="card-container">
+            <h2 class="title-of-card">${card.title}</h2>
+            <button class="delete-button"></button>
+            <p class="body-of-card">${card.body}</p>
+            <button class="upvote"></button> 
+            <button class="downvote"></button> 
+            <p class="quality">quality: ${card.quality}</p>    
         </section>`;
     ideaList.prepend(createdIdea);    
 };
-
-function cardObject() {
-    return {
-        title: $('#title-input').val(),
-        body: $('#body-input').val(),
-        quality: qualityVariable
-    };
-}
-
-// $.each(localStorage, function(key) {
-//     var cardData = JSON.parse(this);
-//     numCards++;
-//     $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-// });
 
 function retrieveIdea() {
     // numCards++;
@@ -52,28 +31,31 @@ function retrieveIdea() {
      var retrievedIdea = localStorage.getItem(localStorage.key(i));
      var parsedIdea = JSON.parse(retrievedIdea);
      console.log(parsedIdea);
-     newCard(parsedIdea.id, parsedIdea.title, parsedIdea.body, parsedIdea.quality);
+     newCard(parsedIdea);
     };
-  };
+};
 
-var localStoreCard = function(id) {
-    var cardString = JSON.stringify(cardObject());
-    localStorage.setItem(id, cardString);
+var localStoreCard = function(card) {
+    var cardString = JSON.stringify(card);
+    localStorage.setItem(card.id, cardString);
 }
  
 $('.save-btn').on('click', function(event) {
-      event.preventDefault();
-      var title = $('#title-input').val();
-      var body = $('#body-input').val();
-      var $id = $.now();
-      var quality = quality;
-      console.log(title);
-      console.log(body);
-    newCard($id, title, body, quality);
-    localStoreCard($id);
+    event.preventDefault();
+    var card = { id: Date.now(), 
+                 title: $('#title-input').val(),
+                 body: $('#body-input').val(),
+                 quality: 'swill' }
+    cardLaunchpad(card);
+});
+    
+function cardLaunchpad(card) {
+    console.log(card);
+    newCard(card);
+    localStoreCard(card);
     $('form')[0].reset();
     toggleDisabledSave();
-});
+}
 
 $(".bottom-box").on('click', function(event){
     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
