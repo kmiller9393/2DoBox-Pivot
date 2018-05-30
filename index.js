@@ -2,6 +2,8 @@ $('#title-input').on('input', toggleDisabledSave);
 $('#body-input').on('input', toggleDisabledSave);
 $('#search-input').on('keyup', searchIdeaList); 
 $(window).on('load', retrieveIdea);
+$('.bottom-box').on('keyup', '.title-of-card', saveEditedTitle);
+$('.bottom-box').on('keyup', '.body-of-card', saveEditedBody);
 
 function toggleDisabledSave() {
      var saveButton = $('.save-btn');
@@ -16,9 +18,9 @@ var newCard = function(card) {
     var ideaList = $('.bottom-box');
     var createdIdea =   
         `<section id=${card.id} class="card-container">
-            <h2 class="title-of-card">${card.title}</h2>
+            <h2 class="title-of-card" contenteditable>${card.title}</h2>
             <button class="delete-button"></button>
-            <p class="body-of-card">${card.body}</p>
+            <p class="body-of-card" contenteditable>${card.body}</p>
             <button class="upvote"></button> 
             <button class="downvote"></button> 
             <p class="quality">quality: <span class="card-quality">${card.quality}</span></p>    
@@ -28,7 +30,6 @@ var newCard = function(card) {
 };
 
 function assignButtonActions() {
-    console.log('yes', event);
     $('.upvote').on('click', upvoteIdea);
     $('.downvote').on('click', downvoteIdea);
     $('.delete-button').on('click', deleteIdea);
@@ -38,7 +39,6 @@ function retrieveIdea() {
     for (var i = 0; i < localStorage.length; i++) {
      var retrievedIdea = localStorage.getItem(localStorage.key(i));
      var parsedIdea = JSON.parse(retrievedIdea);
-     console.log(parsedIdea);
      newCard(parsedIdea);
     };
 };
@@ -57,8 +57,7 @@ $('.save-btn').on('click', function(event) {
     cardLaunchpad(card);
 });
     
-function cardLaunchpad(card) {
-    console.log(card);
+function cardLaunchpad(card) { 
     newCard(card);
     localStoreCard(card);
     $('form')[0].reset();
@@ -95,7 +94,6 @@ function saveQuality(currentId, newQuality) {
 };
 
 function downvoteIdea() {
-    console.log('downvote');
     var currentQuality = $(event.target).siblings('p.quality').children('.card-quality')[0];
     if (currentQuality.innerText === "Critical") {
         currentQuality.innerText = "High";
@@ -109,11 +107,6 @@ function downvoteIdea() {
     var currentId = $(this).parent('section').attr('id')
     var newQuality = currentQuality.innerText
     saveQuality(currentId, newQuality);
-};
-
-function updateQuality() {
-    $('.card-quality') = currentQuality.innerText;
-    console.log(currentQuality.innerText);
 };
 
 function deleteIdea() {
@@ -132,6 +125,33 @@ function searchIdeaList() {
   })
 };
 
+function saveEditedTitle() {
+    var currentId = $(this).parent('section').attr('id');
+    var newTitle = $(this).text();
+    var retrievedIdea = localStorage.getItem(currentId);
+    var parsedIdea = JSON.parse(retrievedIdea);
+    var changedIdea = {
+      id: parsedIdea.id, 
+      title: newTitle, 
+      text: parsedIdea.text, 
+      quality: parsedIdea.quality,
+      };
+    var stringifiedIdea = JSON.stringify(changedIdea);
+    localStorage.setItem(currentId, stringifiedIdea);
+  }
 
-
+  function saveEditedBody() {
+    var currentId = $(this).parent('section').attr('id');
+    var newBody = $(this).text();
+    var retrievedIdea = localStorage.getItem(currentId);
+    var parsedIdea = JSON.parse(retrievedIdea);
+    var changedIdea = {
+      id: parsedIdea.id, 
+      title: parsedIdea.title, 
+      body: newBody, 
+      quality: parsedIdea.quality,
+      };
+    var stringifiedIdea = JSON.stringify(changedIdea);
+    localStorage.setItem(currentId, stringifiedIdea);
+  }
 
