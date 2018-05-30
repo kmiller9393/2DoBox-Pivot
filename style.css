@@ -21,7 +21,7 @@ body {
     text-align: center;
 }
 
-h1{
+h1 {
     color: #6d6e71;
     display: inline-block;
     font-size: 275%;
@@ -90,7 +90,7 @@ input {
     width: 45%;
 }
 
-.title-of-card{
+.title-of-card {
     color: #6D6E71;
     display: inline-block;
     font-family: 'Roboto Slab', serif;
@@ -109,7 +109,7 @@ p {
     font-family: 'Open Sans', sans-serif;
 }
 
-.body-of-card{
+.body-of-card {
     color: #939598;
     font-family: 'Open Sans', sans-serif;
     font-size: 100%;
@@ -168,7 +168,7 @@ button {
     width: 20px;
 }
 
-@media(max-width: 640px){
+@media(max-width: 640px) {
 
     .card-container {
         width: 85%;
