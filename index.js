@@ -4,6 +4,10 @@ $('#search-input').on('keyup', searchIdeaList);
 $(window).on('load', retrieveIdea);
 $('.bottom-box').on('keyup', '.title-of-card', saveEditedTitle);
 $('.bottom-box').on('keyup', '.body-of-card', saveEditedBody);
+$('.bottom-box').on('click', '.card-container .upvote', upvoteIdea);
+$('.bottom-box').on('click', '.card-container .downvote', downvoteIdea);
+$('.bottom-box').on('click', '.card-container .delete-button', deleteIdea);
+
 
 function toggleDisabledSave() {
      var saveButton = $('.save-btn');
@@ -26,14 +30,7 @@ var newCard = function(card) {
             <p class="quality">quality: <span class="card-quality">${card.quality}</span></p>    
         </section>`;
     ideaList.prepend(createdIdea); 
-    assignButtonActions(); 
 };
-
-function assignButtonActions() {
-    $('.upvote').on('click', upvoteIdea);
-    $('.downvote').on('click', downvoteIdea);
-    $('.delete-button').on('click', deleteIdea);
-}
 
 function retrieveIdea() {
     for (var i = 0; i < localStorage.length; i++) {
@@ -72,6 +69,7 @@ function upvoteIdea() {
         currentQuality.innerText = "Normal";
     } else if (currentQuality.innerText === "Normal") {
         currentQuality.innerText = "High";
+        // console.log('normal');
     } else if (currentQuality.innerText === "High") {
         currentQuality.innerText = "Critical";
     } else {newQuality = "Critical"};
@@ -95,6 +93,7 @@ function saveQuality(currentId, newQuality) {
 
 function downvoteIdea() {
     var currentQuality = $(event.target).siblings('p.quality').children('.card-quality')[0];
+    console.log(currentQuality);
     if (currentQuality.innerText === "Critical") {
         currentQuality.innerText = "High";
     } else if (currentQuality.innerText === "High") {
