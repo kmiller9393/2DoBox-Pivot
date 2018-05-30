@@ -50,7 +50,7 @@ $('.save-btn').on('click', function(event) {
     var card = { id: Date.now(), 
                  title: $('#title-input').val(),
                  body: $('#body-input').val(),
-                 quality: 'None' }
+                 quality: 'Normal' }
     cardLaunchpad(card);
 });
     
