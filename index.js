@@ -133,7 +133,7 @@ function saveEditedTitle() {
     var changedIdea = {
       id: parsedIdea.id, 
       title: newTitle, 
-      text: parsedIdea.text, 
+      body: parsedIdea.body, 
       quality: parsedIdea.quality,
       };
     var stringifiedIdea = JSON.stringify(changedIdea);
