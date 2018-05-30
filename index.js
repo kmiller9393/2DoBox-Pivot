@@ -1,5 +1,6 @@
 $('#title-input').on('input', toggleDisabledSave);
 $('#body-input').on('input', toggleDisabledSave);
+$('#search-input').on('keyup', searchIdeaList); 
 $(window).on('load', retrieveIdea);
 
 function toggleDisabledSave() {
@@ -91,10 +92,10 @@ function saveQuality(currentId, newQuality) {
       };
     var stringifiedIdea = JSON.stringify(card);
     localStorage.setItem(currentId, stringifiedIdea);
-}
+};
 
 function downvoteIdea() {
-    console.log('downvote')
+    console.log('downvote');
     var currentQuality = $(event.target).siblings('p.quality').children('.card-quality')[0];
     if (currentQuality.innerText === "Critical") {
         currentQuality.innerText = "High";
@@ -110,10 +111,10 @@ function downvoteIdea() {
     saveQuality(currentId, newQuality);
 };
 
-function updateQuality(){
+function updateQuality() {
     $('.card-quality') = currentQuality.innerText;
-    console.log(currentQuality.innerText)
-}
+    console.log(currentQuality.innerText);
+};
 
 function deleteIdea() {
     var cardHTML = $(event.target).closest('.card-container');
@@ -122,10 +123,14 @@ function deleteIdea() {
 };
 
 
-
-
-
-
+function searchIdeaList() {
+  var searchInput = $(this).val().toLowerCase();
+  $('.card-container').each(function(index, element) {
+  var text = $(element).text().toLowerCase();
+  var match = !!text.match(searchInput);
+  $(element).toggle(match);
+  })
+};
 
 
 
