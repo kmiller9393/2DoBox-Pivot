@@ -38,6 +38,7 @@ h1 {
     height: 30px;
     justify-content: space-between;
     width: 45%;
+    margin-bottom: 1.5rem;
 }
 
 #body-input {
@@ -46,12 +47,14 @@ h1 {
     height: 30px;
     justify-content: space-between;
     width: 45%;
+    margin-bottom: 1.5rem;
 }
 
 #search-input {
     height: 30px;
     margin-top: 50px;
     width: 45%;
+
 }
 
 .save-btn {

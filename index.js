@@ -69,7 +69,6 @@ function upvoteIdea() {
         currentQuality.innerText = "Normal";
     } else if (currentQuality.innerText === "Normal") {
         currentQuality.innerText = "High";
-        // console.log('normal');
     } else if (currentQuality.innerText === "High") {
         currentQuality.innerText = "Critical";
     } else {newQuality = "Critical"};
@@ -93,7 +92,6 @@ function saveQuality(currentId, newQuality) {
 
 function downvoteIdea() {
     var currentQuality = $(event.target).siblings('p.quality').children('.card-quality')[0];
-    console.log(currentQuality);
     if (currentQuality.innerText === "Critical") {
         currentQuality.innerText = "High";
     } else if (currentQuality.innerText === "High") {
